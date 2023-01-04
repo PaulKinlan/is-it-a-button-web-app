@@ -1,6 +1,15 @@
-import { JSX, Component } from "preact";
 import { useState, useEffect } from 'preact/hooks';
-import { IS_BROWSER } from "$fresh/runtime.ts";
+
+const paths = {
+  "group1-shard1of4.bin":
+    "/model/group1-shard1of4.bin",
+  "group1-shard2of4.bin":
+    "/model/group1-shard2of4.bin",
+  "group1-shard3of4.bin":
+    "/model/group1-shard3of4.bin",
+  "group1-shard4of4.bin":
+    "/model/group1-shard4of4.bin",
+};
 
 export function TensorFlow({ url, file }) {
   const [model, setModel] = useState();
@@ -8,18 +17,7 @@ export function TensorFlow({ url, file }) {
   const [prediction, setPrediction] = useState();
 
   useEffect(async () => {
-    const weightUrlConverter = (url) => {
-      console.log("Loading Models", url);
-      const paths = {
-        "group1-shard1of4.bin":
-          "/model/group1-shard1of4.bin",
-        "group1-shard2of4.bin":
-          "/model/group1-shard2of4.bin",
-        "group1-shard3of4.bin":
-          "/model/group1-shard3of4.bin",
-        "group1-shard4of4.bin":
-          "/model/group1-shard4of4.bin",
-      };
+    const weightUrlConverter = (url) => {      
       return paths[url] || url;
     };
 
