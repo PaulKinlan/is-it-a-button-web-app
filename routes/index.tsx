@@ -1,5 +1,5 @@
 import { Head } from "$fresh/runtime.ts";
-import Counter from "../islands/Counter.tsx";
+import FileDrop from "../islands/File.tsx";
 
 export default function Home() {
   return (
@@ -16,8 +16,7 @@ export default function Home() {
         <div class="wrapper">
           <div class="content" role="main">
             <h1 class="title">Is it a button?</h1>
-            <input type="file" id="check" accept="image/*" />
-            <Counter start={3} />
+            <FileDrop accept="image/*" />
           </div>
         </div>
       </body>

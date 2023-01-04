@@ -182,3 +182,11 @@ h2 {
 .dipped {
   transform: translateY(5px);
 }
+
+file-drop {
+  border-radius: 2em;
+  padding: 2em;
+  border: dotted black 2px;
+  margin: 2em;
+  display: inline-block;
+}
