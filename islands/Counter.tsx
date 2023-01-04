@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
-import { Button } from "../components/Button.tsx";
+import type { FileDropEvent } from "https://esm.sh/file-drop-element@1.0.1";
+import "https://esm.sh/file-drop-element@1.0.1";
 
 interface CounterProps {
   start: number;
@@ -7,11 +8,10 @@ interface CounterProps {
 
 export default function Counter(props: CounterProps) {
   const [count, setCount] = useState(props.start);
+  let x: FileDropEvent;
   return (
     <div>
-      <p>{count}</p>
-      <Button onClick={() => setCount(count - 1)}>-1</Button>
-      <Button onClick={() => setCount(count + 1)}>+1</Button>
+      <file-drop onfiledrop={this.onFileDrop} id="test"></file-drop>
     </div>
   );
 }

@@ -5,21 +5,22 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Fresh App</title>
+        <title>Is it a button?</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+        <script src="/script.js" defer></script>
+        <link rel="stylesheet" href="/style.css" />
       </Head>
-      <div>
-        <img
-          src="/logo.svg"
-          width="128"
-          height="128"
-          alt="the fresh logo: a sliced lemon dripping with juice"
-        />
-        <p>
-          Welcome to `fresh`. Try updating this message in the ./routes/index.tsx
-          file, and refresh.
-        </p>
-        <Counter start={3} />
-      </div>
+      <body>
+        <div class="wrapper">
+          <div class="content" role="main">
+            <h1 class="title">Is it a button?</h1>
+            <input type="file" id="check" accept="image/*" />
+            <Counter start={3} />
+          </div>
+        </div>
+      </body>
     </>
   );
 }
