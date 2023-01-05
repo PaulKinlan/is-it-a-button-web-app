@@ -19,6 +19,11 @@ export default function Home() {
             <FileDrop accept="image/*" />
           </div>
         </div>
+        <div>
+          <h2>What is this?</h2>
+          <p>This is an early experiment to see if I can build an ML model that can classify HTML elements that look like buttons or links?</p>
+          <p>I intend to use it as an accessbility audit in Lighthouse to detect if an <code>&lt;a&gt;</code> element visually looks like a <code>&lt;button&gt;</code> and suggest to the author that they might want to consider changing the styling. <a href="https://paul.kinlan.me/button-and-link-scraping-for-ml-training/">Learn more here</a></p>
+        </div>
       </body>
     </>
   );
