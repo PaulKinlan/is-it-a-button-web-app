@@ -190,3 +190,11 @@ file-drop {
   margin: 2em;
   display: inline-block;
 }
+
+file-drop.drop-valid {
+  background-color: green;
+}
+
+file-drop.drop-invalid {
+  background-color: red;
+}
