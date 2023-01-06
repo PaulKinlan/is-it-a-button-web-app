@@ -41,7 +41,7 @@ export function TensorFlow({ url, file }) {
       const normalizedData = tf.tidy(() => {
         //convert the image data to a tensor
         const imgData = context.getImageData(0, 0, 256, 256);
-        let tensor = tf.browser.fromPixels(imgData, 3);
+        let tensor = tf.browser.fromPixels(imgData, 1);
         // Normalize the image
         const offset = tf.scalar(255.0);
         const normalized = tensor.div(offset);
@@ -77,7 +77,7 @@ export function TensorFlow({ url, file }) {
   return (
     <div>
       <h2>Prediction </h2>
-      <div>{model == null ? 'Loading Model' : (prediction != null) ? `This image most likely belongs to ${prediction.classname} with a ${(prediction.score * 100).toFixed(2)} percent confidence.` : ''}</div>
+      <div>{model == null ? 'Loading Model' : (prediction != null) ? <p></p>This image (${ <img src={file} />}) most likely belongs to ${prediction.classname} with a ${(prediction.score * 100).toFixed(2)} percent confidence.</p> : ''}</div>
     </div>
   );
 }
