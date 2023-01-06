@@ -77,7 +77,7 @@ export function TensorFlow({ url, file }) {
   return (
     <div>
       <h2>Prediction </h2>
-      <div>{model == null ? 'Loading Model' : (prediction != null) ? <p></p>This image (${ <img src={file} />}) most likely belongs to ${prediction.classname} with a ${(prediction.score * 100).toFixed(2)} percent confidence.</p> : ''}</div>
+      <div>{model == null ? 'Loading Model' : (prediction != null) ? <p>This image (${ <img src={file} />}) most likely belongs to ${prediction.classname} with a ${(prediction.score * 100).toFixed(2)} percent confidence.</p> : ''}</div>
     </div>
   );
 }
