@@ -23,7 +23,7 @@ export default function Home() {
               <p>I intend to use it as an accessbility audit in Lighthouse to detect if an <code>&lt;a&gt;</code> element visually looks like a <code>&lt;button&gt;</code> and suggest to the author that they might want to consider changing the styling. <a href="https://paul.kinlan.me/button-and-link-scraping-for-ml-training/">Learn more here</a></p>
             </div>
             </div>
-            <FileDrop accept="image/*" />
+            <FileDrop accept="image/*" multiple />
           </div>
         </div>
 

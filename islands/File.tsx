@@ -9,32 +9,33 @@ if (IS_BROWSER) {
 
 interface FileDropProps {
   accept: string;
+  multiple?: boolean;
 }
 
 export default function FileDrop(props: FileDropProps) {
-  const [accept, setAccept] = useState(props.accept);
+  const [accept] = useState(props.accept);
+  const [multiple] = useState(props.multiple);
   const tensorFlow = useRef(null);
-  let [file, setFile] = useState("");
+  let [files, setFiles] = useState("");
   let x: FileDropEvent;
 
   const onFileDrop: FileDropEvent = (event) => {
-    const { files } = event;
-    setFile(URL.createObjectURL(files[0]));
+    setFiles(event.files);
   }
 
   const onFileSelect: Event = (event) => {
-    const { files } = event.target;
-    setFile(URL.createObjectURL(files[0]));
+    setFiles(event.target.files);
   }
 
   return (
     <div>
-      <file-drop onfiledrop={onFileDrop} accept={accept}>
+      <file-drop onfiledrop={onFileDrop} accept={accept} multiple={multiple}>
         <input
           id="file-picker"
           class="file-picker__input"
           type="file"
           accept="image/*"
+          multiple
           onChange={onFileSelect}
         />
         <label for="file-picker" class="file-picker__label">
@@ -46,7 +47,7 @@ export default function FileDrop(props: FileDropProps) {
           </svg>
         </label>
       </file-drop>
-      <TensorFlow url="/model.json" file={file} ref={tensorFlow}></TensorFlow>
+      <TensorFlow url="/model.json" files={files} ref={tensorFlow}></TensorFlow>
     </div>
   );
 }

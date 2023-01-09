@@ -11,24 +11,22 @@ const paths = {
     "/model/group1-shard4of4.bin",
 };
 
-export function TensorFlow({ url, file }) {
-  const [model, setModel] = useState();
+type Prediction = {
+  classname: string;
+  score: Number;
+};
 
-  const [prediction, setPrediction] = useState();
+type PredictionResult = {
+  prediction: Prediction;
+  fileUrl: string;
+}
 
-  useEffect(async () => {
-    const weightUrlConverter = (url) => {      
-      return paths[url] || url;
-    };
+const renderPredictions = (predictionResults: PredictionResult[]) => {
+  return (<ul>{predictionResults.map(({ prediction, fileUrl }) => <p>{<img src={fileUrl} />} most likely belongs to {prediction.classname} with a {(prediction.score * 100).toFixed(2)} percent confidence.</p>)}</ul>);
+}
 
-    const newModel = await tf.loadLayersModel(url, { weightUrlConverter });
-
-    setModel(newModel);
-  }, [url]); // When the URL changes, refetch the model
-
-  useEffect(() => {
-    console.log("Analysing", file);
-
+const analyse = (file: string, model): Promise<Prediction> => {
+  return new Promise<Prediction>((resolve) => {
     const canvas = document.createElement("canvas");
     const img = document.createElement("img");
     img.onload = async () => {
@@ -38,6 +36,7 @@ export function TensorFlow({ url, file }) {
       const context = canvas.getContext("2d");
       context.drawImage(img, 0, 0, 256, 256);
 
+      // tf is a global.
       const normalizedData = tf.tidy(() => {
         //convert the image data to a tensor
         const imgData = context.getImageData(0, 0, 256, 256);
@@ -52,10 +51,7 @@ export function TensorFlow({ url, file }) {
       });
 
       const predTensor = model.predict(normalizedData)
-
-      console.log(predTensor.print());
       const predSoftmax = predTensor.softmax();
-      console.log(predSoftmax.print());
 
       const data = await predSoftmax.data();
 
@@ -67,17 +63,43 @@ export function TensorFlow({ url, file }) {
         1: "Text Link"
       };
 
-      setPrediction({classname: classes[maxIdx], score: max})
+      resolve({ classname: classes[maxIdx], score: max })
     };
 
     img.src = file;
+  })
+};
 
-  }, [file]);
+export function TensorFlow({ url, files }) {
+  const [model, setModel] = useState();
+  const [predictions, setPredictions] = useState();
+
+  useEffect(async () => {
+    const weightUrlConverter = (url) => {
+      return paths[url] || url;
+    };
+
+    const newModel = await tf.loadLayersModel(url, { weightUrlConverter });
+
+    setModel(newModel);
+  }, [url]); // When the URL changes, refetch the model
+
+  useEffect(async () => {
+    console.log("Analysing", files);
+
+    const predictionsResults: PredictionResult[] = []
+    for (const file of files) {
+      const fileUrl = URL.createObjectURL(file)
+      predictionsResults.push({ prediction: await analyse(fileUrl, model), fileUrl });
+    }
+
+    setPredictions(predictionsResults);
+  }, [files]);
 
   return (
     <div>
       <h2>Prediction </h2>
-      <div>{model == null ? 'Loading Model' : (prediction != null) ? <p>This image ({ <img src={file} />}) most likely belongs to {prediction.classname} with a {(prediction.score * 100).toFixed(2)} percent confidence.</p> : ''}</div>
+      <div>{model == null ? 'Loading Model' : (predictions != null) ? renderPredictions(predictions) : ''}</div>
     </div>
   );
 }
