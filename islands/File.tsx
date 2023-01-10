@@ -47,7 +47,7 @@ export default function FileDrop(props: FileDropProps) {
           </svg>
         </label>
       </file-drop>
-      <TensorFlow url="/model.json" files={files} ref={tensorFlow}></TensorFlow>
+      <TensorFlow url="/model/model.json" files={files} ref={tensorFlow}></TensorFlow>
     </div>
   );
 }

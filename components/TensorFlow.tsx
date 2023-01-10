@@ -1,16 +1,5 @@
 import { useState, useEffect } from 'preact/hooks';
 
-const paths = {
-  "group1-shard1of4.bin":
-    "/model/group1-shard1of4.bin",
-  "group1-shard2of4.bin":
-    "/model/group1-shard2of4.bin",
-  "group1-shard3of4.bin":
-    "/model/group1-shard3of4.bin",
-  "group1-shard4of4.bin":
-    "/model/group1-shard4of4.bin",
-};
-
 type Prediction = {
   classname: string;
   score: Number;
