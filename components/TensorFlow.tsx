@@ -64,11 +64,7 @@ export function TensorFlow({ url, files }) {
   const [predictions, setPredictions] = useState();
 
   useEffect(async () => {
-    const weightUrlConverter = (url) => {
-      return paths[url] || url;
-    };
-
-    const newModel = await tf.loadLayersModel(url, { weightUrlConverter });
+    const newModel = await tf.loadLayersModel(url);
 
     setModel(newModel);
   }, [url]); // When the URL changes, refetch the model
