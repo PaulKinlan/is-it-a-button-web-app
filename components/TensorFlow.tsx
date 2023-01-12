@@ -11,7 +11,17 @@ type PredictionResult = {
 }
 
 const renderPredictions = (predictionResults: PredictionResult[]) => {
-  return (<ul>{predictionResults.map(({ prediction, fileUrl }) => <li>{<img src={fileUrl} />} most likely belongs to {prediction.classname} with a {(prediction.score * 100).toFixed(2)} percent confidence.</li>)}</ul>);
+  return (
+  <table>
+    <thead>
+      <th>Image</th><th>Prediction</th><th>Confidence</th>
+    </thead>
+    <tbody>
+      {predictionResults.map(({ prediction, fileUrl }) => <tr>
+        <td>{<img src={fileUrl} />}</td>
+        <td>{prediction.classname}</td>
+        <td>{(prediction.score * 100).toFixed(2)}%</td></tr>)}
+    </tbody></table>);
 }
 
 const analyse = (file: string, model): Promise<Prediction> => {
